@@ -39,7 +39,7 @@ jobs:
         chmod +x newman.sh
         ./newman.sh
       env:
-        POSTMAN_ENV_UID: ${{ github.event.inputs.morpheus_postman_env_uid }}
-        POSTMAN_COLLECTION_UID: ${{ github.event.inputs.morpheus_postman_collection_uid }}
-        POSTMAN_API_KEY: ${{ github.event.inputs.morpheus_postman_api_key }}
+        POSTMAN_ENV_UID: ${{ github.event.inputs.postman_env_uid }}
+        POSTMAN_COLLECTION_UID: ${{ github.event.inputs.postman_collection_uid }}
+        POSTMAN_API_KEY: ${{ github.event.inputs.postman_api_key }}
         
