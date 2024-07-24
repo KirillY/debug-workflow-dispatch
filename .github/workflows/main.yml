@@ -36,8 +36,8 @@ jobs:
     - name: Run Postman Tests
       run: |
         echo "Running postman tests..."
-        chmod +x ./postman/newman.sh
-        ./postman/newman.sh
+        chmod +x newman.sh
+        ./newman.sh
       env:
         POSTMAN_ENV_UID: ${{ github.event.inputs.morpheus_postman_env_uid }}
         POSTMAN_COLLECTION_UID: ${{ github.event.inputs.morpheus_postman_collection_uid }}
