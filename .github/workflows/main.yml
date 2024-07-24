@@ -1,0 +1,46 @@
+name: Manual Postman Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'The environment to test against'
+        required: true
+        default: 'dev'
+      postman_env_uid:
+        description: 'The unique ID for the Postman environment that will be used during tests'
+        required: true
+        default: '2505625-bc9f18c1-4489-406c-a43a-0785704c8e3e'
+      postman_collection_uid:
+        description: 'The unique ID for the Postman collection that will be used during tests'
+        required: true
+        default: '2505625-89968805-bda3-4dbb-b165-8675d32262c3'
+      postman_api_key:
+        description: 'The API key for Postman API, used to access the environment'
+        required: true
+      
+      
+jobs:
+  build:
+    runs-on: nikolaik/python-nodejs
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+       echo "Installing dependencies..."
+       # apk update && apk add --no-cache ca-certificates nodejs npm build-base python3-dev py3-pip && update-ca-certificates
+       npm install -g newman
+       pip install trcli
+    - name: Run Postman Tests
+      run: |
+        echo "Running postman tests..."
+        chmod +x ./postman/newman.sh
+        ./postman/newman.sh
+      env:
+        POSTMAN_ENV_UID: ${{ github.event.inputs.morpheus_postman_env_uid }}
+        POSTMAN_COLLECTION_UID: ${{ github.event.inputs.morpheus_postman_collection_uid }}
+        POSTMAN_API_KEY: ${{ github.event.inputs.morpheus_postman_api_key }}
+        
