@@ -31,7 +31,7 @@ jobs:
     - name: Install dependencies
       run: |
        echo "Installing dependencies..."
-       npm install -g npm
+       sudo npm install -g npm
        npm install -g newman
     - name: Run Postman Tests
       run: |
