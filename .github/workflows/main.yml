@@ -33,7 +33,6 @@ jobs:
        echo "Installing dependencies..."
        # apk update && apk add --no-cache ca-certificates nodejs npm build-base python3-dev py3-pip && update-ca-certificates
        npm install -g newman
-       pip install trcli
     - name: Run Postman Tests
       run: |
         echo "Running postman tests..."
