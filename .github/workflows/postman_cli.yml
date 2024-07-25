@@ -27,23 +27,9 @@ jobs:
     - name: Install Postman CLI
       run: curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
       
-    - name: Install other dependencies
-      run: npm install -g postman-to-openapi
-
+    
     - name: Login to Postman
       run: postman login --with-api-key $POSTMAN_API_KEY
-
-    # - name: Get collection definition
-    #   run: |
-    #     curl --request GET \
-    #          --url "https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID" \
-    #          --header "X-Api-Key: $POSTMAN_API_KEY" > collection.json
-             
-    # - name: Convert collection.json to openapi spec
-    #   run: p2o collection.json -f openapi_spec.yaml
-      
-    # - name: Lint collection openapi spec
-    #   run: postman api lint openapi_spec.yaml
 
     - name: Run collection tests
       run: postman collection run $POSTMAN_COLLECTION_UID -e $POSTMAN_ENV_UID --verbose
