@@ -33,7 +33,8 @@ jobs:
         echo "Running postman tests..."
         postman login --with-api-key $POSTMAN_API_KEY
         curl --request GET \
-        --url 'https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID?apikey=$POSTMAN_API_KEY'
+        --url 'https://api.getpostman.com/collections/$POSTMAN_COLLECTION_UID' \
+        --header 'X-Api-Key: $POSTMAN_API_KEY'
         postman api lint
         postman collection run $POSTMAN_COLLECTION_UID -e $POSTMAN_ENV_UID
       env:
