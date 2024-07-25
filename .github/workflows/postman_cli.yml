@@ -40,7 +40,7 @@ jobs:
              --header "X-Api-Key: $POSTMAN_API_KEY" > collection.json
              
     - name: Convert collection.json to openapi spec
-      run: p2o collection.json -o openapi_spec.yaml
+      run: p2o collection.json -f openapi_spec.yaml
       
     - name: Lint collection openapi spec
       run: postman api lint openapi_spec.yaml
