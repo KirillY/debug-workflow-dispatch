@@ -32,6 +32,7 @@ jobs:
       run: |
         echo "Running postman tests..."
         postman login --with-api-key $POSTMAN_API_KEY
+        postman api lint
         postman collection run $POSTMAN_COLLECTION_UID -e $POSTMAN_ENV_UID
       env:
         POSTMAN_ENV_UID: ${{ github.event.inputs.postman_env_uid }}
