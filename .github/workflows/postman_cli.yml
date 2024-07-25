@@ -37,7 +37,7 @@ jobs:
              --header "X-Api-Key: $POSTMAN_API_KEY" > collection.json
 
     - name: Lint collection definition
-      run: postman api lint
+      run: postman api lint collection.json
 
     - name: Run collection tests
       run: postman collection run collection.json -e $POSTMAN_ENV_UID
