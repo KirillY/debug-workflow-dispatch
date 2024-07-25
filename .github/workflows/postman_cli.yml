@@ -1,0 +1,40 @@
+name: Newman Shell Script
+
+on:
+  workflow_dispatch:
+    inputs:
+      postman_env_uid:
+        description: 'The unique ID for the Postman environment that will be used during tests'
+        required: true
+        default: '2505625-bc9f18c1-4489-406c-a43a-0785704c8e3e'
+      postman_collection_uid:
+        description: 'The unique ID for the Postman collection that will be used during tests'
+        required: true
+        default: '2505625-89968805-bda3-4dbb-b165-8675d32262c3'
+      postman_api_key:
+        description: 'The API key for Postman API, used to access the environment'
+        required: true
+      
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+       echo "Installing dependencies..."
+       curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+    - name: Run Postman Tests
+      run: |
+        echo "Running postman tests..."
+        postman login --with-api-key POSTMAN_API_KEY
+        postman collection run POSTMAN_COLLECTION_UID -e POSTMAN_ENV_UID
+      env:
+        POSTMAN_ENV_UID: ${{ github.event.inputs.postman_env_uid }}
+        POSTMAN_COLLECTION_UID: ${{ github.event.inputs.postman_collection_uid }}
+        POSTMAN_API_KEY: ${{ github.event.inputs.postman_api_key }}
+        
