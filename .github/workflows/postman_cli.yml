@@ -11,6 +11,9 @@ on:
         description: 'The unique ID for the Postman collection that will be used during tests'
         required: true
         default: '2505625-89968805-bda3-4dbb-b165-8675d32262c3'
+      postman_folder_uid:
+        description: 'Optional UID for a Postman folder or individual request'
+        required: false
       
 jobs:
   build:
@@ -19,6 +22,7 @@ jobs:
       POSTMAN_ENV_UID: ${{ github.event.inputs.postman_env_uid }}
       POSTMAN_COLLECTION_UID: ${{ github.event.inputs.postman_collection_uid }}
       POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
+      POSTMAN_FOLDER_UID: ${{ github.event.inputs.postman_folder_uid }}
 
     steps:
     - name: Checkout repository
@@ -31,6 +35,10 @@ jobs:
     - name: Login to Postman
       run: postman login --with-api-key $POSTMAN_API_KEY
 
-    - name: Run collection tests
-      run: postman collection run $POSTMAN_COLLECTION_UID -e $POSTMAN_ENV_UID --verbose
+    - name: Run specific folder or request tests
+      if: env.POSTMAN_FOLDER_UID != ''
+      run: postman collection run $POSTMAN_COLLECTION_UID -e $POSTMAN_ENV_UID -i $POSTMAN_FOLDER_UID --verbose
 
+    - name: Run full collection tests
+      if: env.POSTMAN_FOLDER_UID == ''
+      run: postman collection run $POSTMAN_COLLECTION_UID -e $POSTMAN_ENV_UID --verbose
