@@ -1,4 +1,4 @@
-name: Newman Shell Script
+name: Postman CLI workflow
 
 on:
   workflow_dispatch:
