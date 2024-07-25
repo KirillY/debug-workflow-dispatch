@@ -1,4 +1,4 @@
-name: Manual Postman Workflow
+name: Newman Shell Script
 
 on:
   workflow_dispatch:
@@ -31,8 +31,6 @@ jobs:
     - name: Install dependencies
       run: |
        echo "Installing dependencies..."
-       # sudo npm install -g npm
-       npm install uuid
        npm install -g newman
     - name: Run Postman Tests
       run: |
